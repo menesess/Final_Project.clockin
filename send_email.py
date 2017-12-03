@@ -11,12 +11,18 @@ class Email_reminder():
         self.recipient = "guillermoramos330179@gmail.com"
         self.msg = MIMEMultipart()
         self.server = smtplib.SMTP('smtp.gmail.com', 587)
+        self.compose_email()
+        self.login()
 
     def check_time(self, schedule):
-        if datetime.datetime.now().day == schedule.start_time.day:
-            if datetime.datetime.now().hour == schedule.start_time.hour:
-                if datetime.datetime.now().minute == schedule.start_time.minute:
+
+        if datetime.datetime.now().weekday() in schedule.days:
+            if datetime.datetime.time(datetime.datetime.now()).hour == schedule.start_time.hour or datetime.datetime.time(datetime.datetime.now()).hour == schedule.end_time.hour:
+                duration = datetime.datetime.combine(datetime.date.min,  datetime.datetime.now().time()) - datetime.datetime.combine(datetime.date.min, schedule.last_sent)
+                if datetime.datetime.now().minute == schedule.start_time.minute and duration > datetime.timedelta(minutes = 5) :
+                    print('send')
                     self.send_email()
+                    quit()
 
     def compose_email(self):
         self.msg['From'] = "justcallmemarvin@gmail.com"
@@ -33,11 +39,6 @@ class Email_reminder():
         self.server.starttls()
         self.server.login("justcallmemarvin@gmail.com", "Enilorac08!")
 
-def main():
-    while True:
-        return email.check_time
-
-    body = "Hi, Pollito! Please click on the link below to clock in/out. /n https://timemachine1-vm.berea.edu/UltraTime/UltraPunch/login.aspx?ReturnUrl=%2fultratime%2fultrapunch%2findex.aspx"
 
 
 
