@@ -1,3 +1,14 @@
+#######################################################################################################
+# Author: Nina Meneses
+# Username: menesess
+#
+# Assignment: Final Project: Email Reminder
+#
+# Purpose: To send Guillermo automated email reminders according to his work schedule
+#
+########################################################################################################
+# Acknowledgements: Python Software Foundation, Stack Overflow, Python Library Reference and Guillermo
+########################################################################################################
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -22,7 +33,12 @@ class Email_reminder():
                 if datetime.datetime.now().minute == schedule.start_time.minute and duration > datetime.timedelta(minutes = 5) :
                     print('send')
                     self.send_email()
-                    quit()
+                    schedule.last_sent = datetime.datetime.now().time()
+
+    def login(self):
+        self.server = smtplib.SMTP('smtp.gmail.com', 587)
+        self.server.starttls()
+        self.server.login("justcallmemarvin@gmail.com", "Enilorac08!")
 
     def compose_email(self):
         self.msg['From'] = "justcallmemarvin@gmail.com"
@@ -33,13 +49,3 @@ class Email_reminder():
     def send_email(self):
         self.server.sendmail("justcallmemarvin@gmail.com", self.recipient, self.msg.as_string())
         self.server.quit()
-
-    def login(self):
-        self.server = smtplib.SMTP('smtp.gmail.com', 587)
-        self.server.starttls()
-        self.server.login("justcallmemarvin@gmail.com", "Enilorac08!")
-
-
-
-
-
