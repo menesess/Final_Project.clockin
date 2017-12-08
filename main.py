@@ -14,18 +14,23 @@ from send_email import Email_reminder
 import datetime
 
 def main():
-    monday_morning = Schedule(datetime.time(8), datetime.time(9, 10), [1,3,5])
-    monday_afternoon = Schedule(datetime.time(12), datetime.time(1), [1,3,5])
-    tuesday_morning = Schedule(datetime.time(9), datetime.time(11), [2,4])
-    tuesday_afternoon = Schedule(datetime.time(12), datetime.time(13), [2,4])
+    """
+    Everything is called here.
+    :return: none
+    """
+    MWF_morning = Schedule(datetime.time(8), datetime.time(9, 10), [0,2,4])  # Schedule is set here and put into a list.
+    MWF_afternoon = Schedule(datetime.time(12), datetime.time(1), [0,2,4])
+    TR_morning = Schedule(datetime.time(9), datetime.time(11), [1,3])
+    TR_afternoon = Schedule(datetime.time(12), datetime.time(13), [1,3])
     test = Schedule(datetime.time(17, 44), datetime.time(17, 46), [6])
 
-    schedules = [test, monday_morning, monday_afternoon, tuesday_morning, tuesday_afternoon]
+    schedules = [test, MWF_morning, MWF_afternoon, TR_morning, TR_afternoon]
 
     body = "Hi, Pollito! Please click on the link below to clock in/out. /n https://timemachine1-vm.berea.edu/UltraTime/UltraPunch/login.aspx?ReturnUrl=%2fultratime%2fultrapunch%2findex.aspx"
 
-    email_reminder = Email_reminder('Clock In/Clock Out', body)
-    while True:
+    email_reminder = Email_reminder("guillermoramos330179@gmail.com", body)
+
+    while True:                                     # while loop goes on forever
         for schedule in schedules:
             email_reminder.check_time(schedule)
 
