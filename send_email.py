@@ -19,7 +19,7 @@ class Email_reminder():
     """
     This class represents all the necessary components of an email
     """
-    def __init__(self,recipient, body):
+    def __init__(self,recipient, sender, body, password):
         """
         Conects to email server and logs in.
         :param recipient: set fro whomever you want to send the reminder to
@@ -27,6 +27,8 @@ class Email_reminder():
         """
         self.message = body
         self.recipient = recipient
+        self.sender = sender
+        self.password = password
         self.msg = MIMEMultipart()
         self.server = smtplib.SMTP('smtp.gmail.com', 587)
         self.compose_email()
@@ -55,14 +57,14 @@ class Email_reminder():
         """
         self.server = smtplib.SMTP('smtp.gmail.com', 587)
         self.server.starttls()
-        self.server.login("example@gmail.com", "Password")  # insert your own username and password
+        self.server.login(self.sender, self.password)
 
     def compose_email(self):
         """
         Sets email info.
         :return: none
         """
-        self.msg['From'] = "example@gmail.com"
+        self.msg['From'] = self.sender
         self.msg['To'] = self.recipient
         self.msg['subject'] = "TIME-PUNCH REMINDER"
         self.msg.attach(MIMEText(self.message, 'plain'))
@@ -72,5 +74,5 @@ class Email_reminder():
         Sends the email
         :return: none
         """
-        self.server.sendmail("justcallmemarvin@gmail.com", self.recipient, self.msg.as_string())
+        self.server.sendmail(self.sender, self.recipient, self.msg.as_string())
         self.server.quit()

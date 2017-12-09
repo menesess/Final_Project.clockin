@@ -12,6 +12,7 @@
 from schedule import Schedule
 from send_email import Email_reminder
 import datetime
+import variable_file    # You need a file named variable_file.py that holds all the necessary varialbes and their values. TOADDR, FROMADDR, BODY, and PASSWORD
 
 def main():
     """
@@ -26,9 +27,8 @@ def main():
 
     schedules = [test, MWF_morning, MWF_afternoon, TR_morning, TR_afternoon]
 
-    body = "Hi, Pollito! Please click on the link below to clock in/out. /n https://timemachine1-vm.berea.edu/UltraTime/UltraPunch/login.aspx?ReturnUrl=%2fultratime%2fultrapunch%2findex.aspx"
 
-    email_reminder = Email_reminder("guillermoramos330179@gmail.com", body)
+    email_reminder = Email_reminder(variable_file.TOADDR, variable_file.FROMADDR, variable_file.BODY, variable_file.PASSWORD)
 
     while True:                                     # while loop goes on forever
         for schedule in schedules:
