@@ -20,10 +20,11 @@ def main():
     :return: none
     """
     MWF_morning = Schedule(datetime.time(8), datetime.time(9, 10), [0,2,4])  # Schedule is set here and put into a list.
-    MWF_afternoon = Schedule(datetime.time(12), datetime.time(1), [0,2,4])
-    TR_morning = Schedule(datetime.time(9), datetime.time(11), [1,3])
-    TR_afternoon = Schedule(datetime.time(12), datetime.time(13), [1,3])
-    test = Schedule(datetime.time(17, 44), datetime.time(17, 46), [6])
+    MWF_afternoon = Schedule(datetime.time(12), datetime.time(1), [0,2,4])  # first number in parentheses indicates the clock in time using military time
+    TR_morning = Schedule(datetime.time(9), datetime.time(11), [1,3])   # second set of numbers in parentheses indicate clock out time, including the minutes
+    TR_afternoon = Schedule(datetime.time(12), datetime.time(13), [1,3])    # third set of numbers in brackets indicate the days of the week. 6 = sunday, 0 = monday
+
+    test = Schedule(datetime.time(17, 44), datetime.time(17, 46), [6])  # test for Sunday. Clock in at 5:44pma and clock out at 5:46pm
 
     schedules = [test, MWF_morning, MWF_afternoon, TR_morning, TR_afternoon]
 
